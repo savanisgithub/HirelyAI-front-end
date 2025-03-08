@@ -21,10 +21,13 @@ export const createJobApplication = async ({
   job,
   answers,
 }) => {
+  const token = await window.__clerk_domain.session.getToken();
+
   await fetch("http://localhost:8000/jobApplications", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       userId: userId,

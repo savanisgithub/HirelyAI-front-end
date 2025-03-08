@@ -1,8 +1,26 @@
 import { Button } from "@/components/ui/button";
-import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { useUser } from "@clerk/clerk-react";
+import React, { useEffect } from "react";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
 function AdminMainLayout() {
+  const {user, isLoaded, isSignedIn} = useUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(!isLoaded){
+      return;
+    }
+
+    if(isSignedIn) {
+      return navigate("/sign-in") 
+    }
+
+    if(user?.publicMetadata?.role !== "admin"){
+      return navigate("/")
+    }
+  }, [isLoaded, isSignedIn, user, navigate]);
+
   return (
     <div>
       <div className="flex justify-end gap-4 items-center py-4">
