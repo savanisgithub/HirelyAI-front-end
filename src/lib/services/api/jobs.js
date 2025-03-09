@@ -28,7 +28,7 @@ export const createJob = async ({
 }) => {
   const token = await window.Clerk.session.getToken();
 
-  await fetch(`http://localhost:8000/jobApplications`, {
+  await fetch("http://localhost:8000/jobs", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

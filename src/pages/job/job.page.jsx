@@ -6,15 +6,53 @@ import { Textarea } from "@/components/shared/ui/textarea";
 import { Briefcase, MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { createJob, getJobById } from "@/lib/services/api/jobs";
 import { useUser } from "@clerk/clerk-react";
+// import { createJobApplication } from "@/lib/services/api/jobApplications";
+
+const getJob = async (id) => {
+  const token = await window.Clerk.session.getToken();
+
+  const res = await fetch(`http://localhost:8000/jobs/${id}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const job = await res.json();
+  return job;
+};
+
+const createJob = async (jobApplication) => {
+  const token = await window.Clerk.session.getToken();
+
+  await fetch(`http://localhost:8000/jobApplications`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(jobApplication),
+  });
+};
 
 function JobPage() {
   const [job, setJob] = useState(null);
   const params = useParams();
-  const { isLoaded, isSignedIn, user } = useUser();
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { isLoaded, isSignedIn, user } = useUser();
+
+  useEffect(() => {
+    getJob(params.id)
+      .then((data) => {
+        setJob(data);
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {});
+  }, [params]);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -22,38 +60,35 @@ function JobPage() {
     a2: "",
     a3: "",
   });
-  
-  useEffect(() => {
-    if (!isLoaded) {
-      return;
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await createJob({
+        fullName: formData.fullName,
+        answers: [formData.a1, formData.a2, formData.a3],
+        job: params.id,
+        userId: user.id,
+      });
+
+      setMessage("Job application submitted successfully!");
+
+      setTimeout(() => {
+        navigate(-1); // Redirects to the previous page
+      }, 2000); // Show the message briefly before redirecting
+    } catch (error) {
+      console.error("Submission failed:", error);
+      setMessage("Failed to submit job application.");
     }
-
-    if (!isSignedIn) {
-      return <Navigate to={"/sign-in"} />;
-    }
-
-    if (!id) return;
-
-    getJobById(id)
-      .then((data) => {
-        setJob(data);
-        setIsLoading(false)
-      })
-      .catch((err) => { })
-      .finally(() => { });
-  }, [id, isLoaded, isSignedIn, navigate]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-    createJob({
-      fullName: formData.fullName,
-      answers: [formData.a1, formData.a2, formData.a3],
-      job: params.id,
-      userId: user.id,
-    });
   };
 
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isSignedIn) {
+    return <Navigate to="/sign-in" />;
+  }
 
   return (
     <div>
@@ -74,7 +109,9 @@ function JobPage() {
         <p>{job?.description}</p>
       </div>
       <Separator />
-
+      {message && (
+        <div className="text-green-600 font-bold py-2">{message}</div>
+      )}
       <form className=" flex flex-col gap-y-4 py-8" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-y-2 ">
           <Label className="font-bold">Full Name</Label>

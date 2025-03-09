@@ -2,7 +2,7 @@ import { Input } from "@/components/shared/ui/input";
 import { Textarea } from "@/components/shared/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { createJob } from "@/lib/services/api/jobs";
-import React, { useState } from "react";
+import { useState } from "react";
 
 function AdminJobCreatePage() {
   const [formData, setFormData] = useState({
@@ -22,13 +22,21 @@ function AdminJobCreatePage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await createJob({
-      title: formData.title,
-      type: formData.type,
-      description: formData.description,
-      location: formData.location,
-      questions: [formData.q1, formData.q2, formData.q3],
-    });
+    try {
+      await createJob({
+        title: formData.title,
+        type: formData.type,
+        description: formData.description,
+        location: formData.location,
+        questions: [formData.q1, formData.q2, formData.q3],
+      });
+
+      alert("Job created successfully!"); // Show success message
+      window.history.back(); // Redirect to the previous page
+    } catch (error) {
+      console.error("Error creating job:", error);
+      alert("Failed to create job. Please try again.");
+    }
   };
 
   return (

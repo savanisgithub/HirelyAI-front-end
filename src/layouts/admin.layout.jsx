@@ -4,20 +4,20 @@ import React, { useEffect } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 
 function AdminMainLayout() {
-  const {user, isLoaded, isSignedIn} = useUser();
+  const { user, isLoaded, isSignedIn } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(!isLoaded){
+    if (!isLoaded) {
       return;
     }
 
-    if(isSignedIn) {
-      return navigate("/sign-in") 
+    if (!isSignedIn) {
+      return navigate("/sign-in");
     }
 
-    if(user?.publicMetadata?.role !== "admin"){
-      return navigate("/")
+    if (user?.publicMetadata?.role !== "admin") {
+      return navigate("/");
     }
   }, [isLoaded, isSignedIn, user, navigate]);
 
