@@ -71,7 +71,7 @@ function JobPage() {
         userId: user.id,
       });
 
-      setMessage("Job application submitted successfully!");
+      alert("Job application submitted successfully!");
 
       setTimeout(() => {
         navigate(-1); // Redirects to the previous page
@@ -109,9 +109,7 @@ function JobPage() {
         <p>{job?.description}</p>
       </div>
       <Separator />
-      {message && (
-        <div className="text-green-600 font-bold py-2">{message}</div>
-      )}
+
       <form className=" flex flex-col gap-y-4 py-8" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-y-2 ">
           <Label className="font-bold">Full Name</Label>

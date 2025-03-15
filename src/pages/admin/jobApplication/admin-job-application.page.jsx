@@ -22,6 +22,8 @@ function AdminJobApplicationPage() {
         console.log(err);
         setIsLoading(false);
       });
+
+    console.log(jobApplication);
   }, [applicationId]);
 
   if (isLoading) {
@@ -39,9 +41,9 @@ function AdminJobApplicationPage() {
           <CardTitle>{jobApplication?.fullName}</CardTitle>
           <Badge
             className={cn({
-              "bg-red-500":
+              "bg-red-400":
                 jobApplication?.rating?.toLocaleLowerCase() === "bad",
-              "bg-orange-400":
+              "bg-orange-300":
                 jobApplication?.rating?.toLocaleLowerCase() === "moderate",
               "bg-teal-500":
                 jobApplication?.rating?.toLocaleLowerCase() === "good",
