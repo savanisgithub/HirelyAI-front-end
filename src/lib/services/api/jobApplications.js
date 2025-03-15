@@ -2,7 +2,7 @@ export const getJobApllicationsForJob = async (id) => {
   const token = await window.Clerk.session.getToken();
 
   const res = await fetch(
-    `hirelyai-back-end-production.up.railway.app/jobApplications?jobId=${id}`,
+    `hirelyai-back-end.railway.internal/jobApplications?jobId=${id}`,
     {
       method: "GET",
       headers: {
@@ -18,7 +18,7 @@ export const getJobApplicationById = async (id) => {
   const token = await window.Clerk.session.getToken();
 
   const res = await fetch(
-    `hirelyai-back-end-production.up.railway.app/jobApplications/${id}`,
+    `hirelyai-back-end.railway.internal/jobApplications/${id}`,
     {
       method: "GET",
       headers: {
@@ -39,7 +39,7 @@ export const createJobApplication = async ({
 }) => {
   // const token = await window.Clerk.session.getToken();
 
-  await fetch("hirelyai-back-end-production.up.railway.app/jobApplications", {
+  await fetch("hirelyai-back-end.railway.internal/jobApplications", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
