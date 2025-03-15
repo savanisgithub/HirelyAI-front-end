@@ -12,7 +12,7 @@ import { useUser } from "@clerk/clerk-react";
 const getJob = async (id) => {
   const token = await window.Clerk.session.getToken();
 
-  const res = await fetch(`http://localhost:8000/jobs/${id}`, {
+  const res = await fetch(`hirelyai-back-end.railway.internal/jobs/${id}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -25,7 +25,7 @@ const getJob = async (id) => {
 const createJob = async (jobApplication) => {
   const token = await window.Clerk.session.getToken();
 
-  await fetch(`http://localhost:8000/jobApplications`, {
+  await fetch(`hirelyai-back-end.railway.internal/jobApplications`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
