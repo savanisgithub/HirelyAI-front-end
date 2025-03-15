@@ -10,7 +10,7 @@ function JobSection() {
 
   // useEffect(() => {
   //   const getJobs = async () => {
-  //     const response = await axios.get("hirelyai-back-end.railway.internal/jobs");
+  //     const response = await axios.get("hirelyai-back-end-production.up.railway.app/jobs");
   //     console.log(response);
   //     setJobs(response.data);
   //   };

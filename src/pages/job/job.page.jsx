@@ -12,12 +12,15 @@ import { useUser } from "@clerk/clerk-react";
 const getJob = async (id) => {
   const token = await window.Clerk.session.getToken();
 
-  const res = await fetch(`hirelyai-back-end.railway.internal/jobs/${id}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const res = await fetch(
+    `hirelyai-back-end-production.up.railway.app/jobs/${id}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
   const job = await res.json();
   return job;
 };
@@ -25,7 +28,7 @@ const getJob = async (id) => {
 const createJob = async (jobApplication) => {
   const token = await window.Clerk.session.getToken();
 
-  await fetch(`hirelyai-back-end.railway.internal/jobApplications`, {
+  await fetch(`hirelyai-back-end-production.up.railway.app/jobApplications`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
