@@ -2,7 +2,7 @@ export const getJobApllicationsForJob = async (id) => {
   const token = await window.Clerk.session.getToken();
 
   const res = await fetch(
-    `hirelyai-back-end-production.up.railway.app/jobApplications?jobId=${id}`,
+    `http://hirelyai-back-end-production.up.railway.app/jobApplications?jobId=${id}`,
     {
       method: "GET",
       headers: {
@@ -18,7 +18,7 @@ export const getJobApplicationById = async (id) => {
   const token = await window.Clerk.session.getToken();
 
   const res = await fetch(
-    `hirelyai-back-end-production.up.railway.app/jobApplications/${id}`,
+    `http://hirelyai-back-end-production.up.railway.app/jobApplications/${id}`,
     {
       method: "GET",
       headers: {
@@ -39,17 +39,20 @@ export const createJobApplication = async ({
 }) => {
   // const token = await window.Clerk.session.getToken();
 
-  await fetch("hirelyai-back-end-production.up.railway.app/jobApplications", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      // Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      userId: userId,
-      fullName: fullName,
-      job,
-      answers,
-    }),
-  });
+  await fetch(
+    "http://hirelyai-back-end-production.up.railway.app/jobApplications",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        userId: userId,
+        fullName: fullName,
+        job,
+        answers,
+      }),
+    }
+  );
 };
