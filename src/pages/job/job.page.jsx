@@ -13,7 +13,7 @@ const getJob = async (id) => {
   const token = await window.Clerk.session.getToken();
 
   const res = await fetch(
-    `https://hirelyai-back-end-production.up.railway.app/jobs/${id}`,
+    `http://hirelyai-back-end-production.up.railway.app/jobs/${id}`,
     {
       method: "GET",
       headers: {
@@ -29,7 +29,7 @@ const createJob = async (jobApplication) => {
   const token = await window.Clerk.session.getToken();
 
   await fetch(
-    `https://hirelyai-back-end-production.up.railway.app/jobApplications`,
+    `http://hirelyai-back-end-production.up.railway.app/jobApplications`,
     {
       method: "POST",
       headers: {
