@@ -5,16 +5,25 @@ import { Separator } from "@/components/shared/ui/separator";
 import { Textarea } from "@/components/shared/ui/textarea";
 import { Briefcase, MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { createJob, getJobById } from "@/lib/services/api/jobs";
 import { useUser } from "@clerk/clerk-react";
 
 function JobPage() {
   const [job, setJob] = useState(null);
   const params = useParams();
+
   const { isLoaded, isSignedIn, user } = useUser();
-  const navigate = useNavigate();
-  const { id } = useParams();
+
+  useEffect(() => {
+    getJobById(params.id)
+      .then((data) => {
+        setJob(data);
+        console.log(data);
+      })
+      .catch((err) => {})
+      .finally(() => {});
+  }, [params]);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -22,27 +31,6 @@ function JobPage() {
     a2: "",
     a3: "",
   });
-  // test
-  
-  useEffect(() => {
-    if (!isLoaded) {
-      return;
-    }
-
-    if (!isSignedIn) {
-      return <Navigate to={"/sign-in"} />;
-    }
-
-    if (!id) return;
-
-    getJobById(id)
-      .then((data) => {
-        setJob(data);
-        setIsLoading(false)
-      })
-      .catch((err) => { })
-      .finally(() => { });
-  }, [id, isLoaded, isSignedIn, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -55,6 +43,13 @@ function JobPage() {
     });
   };
 
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isSignedIn) {
+    return <Navigate to={"/sign-in"} />;
+  }
 
   return (
     <div>
