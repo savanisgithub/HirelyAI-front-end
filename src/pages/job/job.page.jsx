@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { createJob, getJobById } from "@/lib/services/api/jobs";
 import { useUser } from "@clerk/clerk-react";
+import { createJobApplication } from "@/lib/services/api/jobApplications";
 
 function JobPage() {
   const [job, setJob] = useState(null);
@@ -35,7 +36,7 @@ function JobPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    createJob({
+    createJobApplication({
       fullName: formData.fullName,
       answers: [formData.a1, formData.a2, formData.a3],
       job: params.id,

@@ -27,6 +27,7 @@ function JobSection() {
       })
       .catch((err) => {
         setIsJobsError(true);
+        console.log(err);
       })
       .finally(() => {
         setIsJobsLoading(false);
