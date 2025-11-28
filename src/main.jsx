@@ -14,6 +14,7 @@ import AdminJobCreatePage from "./pages/admin/createJob/job-create.page";
 import AdminJobApplicationPage from "./pages/admin/jobApplication/admin-job-application.page";
 import AdminJobPage from "./pages/admin/job/admin-job.page";
 import { ClerkProvider } from "@clerk/clerk-react";
+import { Toaster } from "sonner";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -80,6 +81,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
       {/*A thing that can catch and show all the mistekes and errors we do in react app When we use advanced react*/}
       <RouterProvider router={router} />
+      <Toaster position="top-right" richColors />
     </ClerkProvider>
   </React.StrictMode>
 );
