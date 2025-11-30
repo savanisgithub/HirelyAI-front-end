@@ -11,6 +11,19 @@ export const getJobApllicationsForJob = async (id) => {
   return data;
 };
 
+export const getAllJobApplications = async () => {
+  const token = await window.Clerk.session.getToken();
+
+  const res = await fetch(`http://localhost:8000/jobApplications`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const data = await res.json();
+  return data;
+};
+
 export const getJobApplicationById = async (id) => {
   const token = await window.Clerk.session.getToken();
 
