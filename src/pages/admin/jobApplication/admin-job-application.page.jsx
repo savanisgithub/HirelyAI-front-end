@@ -36,7 +36,7 @@ function AdminJobApplicationPage() {
     <div className="flex flex-col gap-y-4">
       <Card className="bg-foreground">
         <CardHeader className="flex-row items-center gap-x-4">
-          <CardTitle>{jobApplication?.fullName}</CardTitle>
+          <CardTitle className="text-black">{jobApplication?.fullName}</CardTitle>
           <Badge
             className={cn({
               "bg-red-500":

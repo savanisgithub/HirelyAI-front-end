@@ -36,10 +36,13 @@ function JobSection() {
 
   if (isJobsLoading) {
     return (
-      <section className="py-8">
-        <h2>Available Jobs</h2>
-        <div className="mt-4 flex flex-col gap-y-8">
-          <h3>Loading...</h3>
+      <section className="py-16">
+        <div className="mb-8">
+          <h2 className="mb-2">Available Positions</h2>
+          <div className="h-1 w-20 bg-gradient-to-r from-primary to-transparent rounded"></div>
+        </div>
+        <div className="flex items-center justify-center py-12">
+          <div className="animate-pulse text-muted-foreground">Loading opportunities...</div>
         </div>
       </section>
     );
@@ -47,19 +50,26 @@ function JobSection() {
 
   if (isJobsError) {
     return (
-      <section className="py-8">
-        <h2>Available Jobs</h2>
-        <div className="mt-4 flex flex-col gap-y-8">
-          <h1>Error fetching data</h1>
+      <section className="py-16">
+        <div className="mb-8">
+          <h2 className="mb-2">Available Positions</h2>
+          <div className="h-1 w-20 bg-gradient-to-r from-primary to-transparent rounded"></div>
+        </div>
+        <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-6 text-center">
+          <p className="text-destructive font-medium">Unable to load job listings. Please try again later.</p>
         </div>
       </section>
     );
   }
 
   return (
-    <section className="py-8">
-      <h2>Available Jobs</h2>
-      <div className="mt-4 flex flex-col gap-y-8">
+    <section className="py-16">
+      <div className="mb-10">
+        <h2 className="mb-2">Available Positions</h2>
+        <div className="h-1 w-20 bg-gradient-to-r from-primary to-transparent rounded"></div>
+        <p className="text-muted-foreground mt-3">Explore {jobs.length} open {jobs.length === 1 ? 'position' : 'positions'}</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {jobs.map((job) => {
           return (
             <JobCard
